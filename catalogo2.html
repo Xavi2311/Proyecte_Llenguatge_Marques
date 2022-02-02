@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="GardenShop.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          // Variables
+          const baseDeDatos = [
+              {
+                  id: 1,
+                  nombre: 'YUCCA',
+                  precio: 30,
+                  imagen: 'fotos/yucca.png'
+              },
+              {
+                  id: 2,
+                  nombre: 'ORQUIDEA',
+                  precio: 30,
+                  imagen: 'fotos/orquidea.png'
+              },
+              {
+                  id: 3,
+                  nombre: 'ALBAHACA',
+                  precio: 5,
+                  imagen: 'fotos/albahaca.png'
+              },
+              {
+                  id: 4,
+                  nombre: 'MENTA',
+                  precio: 5,
+                  imagen: 'fotos/menta.png'
+              },
+              {
+                  id: 5,
+                  nombre: 'ALOE',
+                  precio: 10,
+                  imagen: 'fotos/aloe.png'
+              },
+              {
+                  id: 6,
+                  nombre: 'INCIENSO',
+                  precio: 10,
+                  imagen: 'fotos/incienso.png'
+              },
+              {
+                  id: 7,
+                  nombre: 'MONSTERA',
+                  precio: 22,
+                  imagen: 'fotos/monstera.png'
+              },
+              {
+                  id: 8,
+                  nombre: 'BONSAI',
+                  precio: 30,
+                  imagen: 'fotos/bonsai.png'
+              },
+              {
+                  id: 9,
+                  nombre: 'NARANJO',
+                  precio: 14,
+                  imagen: 'fotos/naranjo.png'
+              },
+              {
+                  id: 10,
+                  nombre: 'CROCATA',
+                  precio: 10,
+                  imagen: 'fotos/crocata.png'
+              },
+              {
+                  id: 11,
+                  nombre: 'LIMONERO',
+                  precio: 15,
+                  imagen: 'fotos/limonero.png'
+              },
+
+          ];
+
+          let carrito = [];
+          const divisa = '€';
+          const DOMitems = document.querySelector('#items');
+          const DOMcarrito = document.querySelector('#carrito');
+          const DOMtotal = document.querySelector('#total');
+          const DOMbotonVaciar = document.querySelector('#boton-vaciar');
+
+          // Funciones
+
+          /**
+          * Dibuja todos los productos a partir de la base de datos. No confundir con el carrito
+          */
+          function renderizarProductos() {
+              baseDeDatos.forEach((info) => {
+                  // Estructura
+                  const miNodo = document.createElement('div');
+                  miNodo.classList.add('card', 'col-sm-4');
+                  // Body
+                  const miNodoCardBody = document.createElement('div');
+                  miNodoCardBody.classList.add('card-body');
+                  // Titulo
+                  const miNodoTitle = document.createElement('h5');
+                  miNodoTitle.classList.add('card-title');
+                  miNodoTitle.textContent = info.nombre;
+                  // Imagen
+                  const miNodoImagen = document.createElement('img');
+                  miNodoImagen.classList.add('img-fluid');
+                  miNodoImagen.classList.add('imgcatalogo');
+                  miNodoImagen.setAttribute('src', info.imagen);
+                  // Precio
+                  const miNodoPrecio = document.createElement('h3');
+                  miNodoPrecio.classList.add('card-text');
+                  miNodoPrecio.textContent = `${info.precio}${divisa}`;
+                  // Boton 
+                  const miNodoBoton = document.createElement('button');
+                  miNodoBoton.classList.add('btn', 'btn-primary');
+                  miNodoBoton.textContent = '+';
+                  miNodoBoton.setAttribute('marcador', info.id);
+                  miNodoBoton.addEventListener('click', anyadirProductoAlCarrito);
+                  // Insertamos
+                  miNodoCardBody.appendChild(miNodoImagen);
+                  miNodoCardBody.appendChild(miNodoTitle);
+                  miNodoCardBody.appendChild(miNodoPrecio);
+                  miNodoCardBody.appendChild(miNodoBoton);
+                  miNodo.appendChild(miNodoCardBody);
+                  DOMitems.appendChild(miNodo);
+              });
+          }
+
+          /**
+          * Evento para añadir un producto al carrito de la compra
+          */
+          function anyadirProductoAlCarrito(evento) {
+              // Anyadimos el Nodo a nuestro carrito
+              carrito.push(evento.target.getAttribute('marcador'))
+              // Actualizamos el carrito 
+              renderizarCarrito();
+
+          }
+
+          /**
+          * Dibuja todos los productos guardados en el carrito
+          */
+          function renderizarCarrito() {
+              // Vaciamos todo el html
+              DOMcarrito.textContent = '';
+              // Quitamos los duplicados
+              const carritoSinDuplicados = [...new Set(carrito)];
+              // Generamos los Nodos a partir de carrito
+              carritoSinDuplicados.forEach((item) => {
+                  // Obtenemos el item que necesitamos de la variable base de datos
+                  const miItem = baseDeDatos.filter((itemBaseDatos) => {
+                      // ¿Coincide las id? Solo puede existir un caso
+                      return itemBaseDatos.id === parseInt(item);
+                  });
+                  // Cuenta el número de veces que se repite el producto
+                  const numeroUnidadesItem = carrito.reduce((total, itemId) => {
+                      // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
+                      return itemId === item ? total += 1 : total;
+                  }, 0);
+                  // Creamos el nodo del item del carrito
+                  const miNodo = document.createElement('li');
+                  miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+                  miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - ${miItem[0].precio}${divisa}`;
+                  // Boton de borrar
+                  const miBoton = document.createElement('button');
+                  miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+                  miBoton.textContent = 'X';
+                  miBoton.style.marginLeft = '1rem';
+                  miBoton.dataset.item = item;
+                  miBoton.addEventListener('click', borrarItemCarrito);
+                  // Mezclamos nodos
+                  miNodo.appendChild(miBoton);
+                  DOMcarrito.appendChild(miNodo);
+                  // Mezclamos nodos
+                  miNodo.appendChild(miBoton);
+                  DOMcarrito.appendChild(miNodo);
+              });
+             // Renderizamos el precio total en el HTML
+             DOMtotal.textContent = calcularTotal();
+          }
+
+          /**
+          * Evento para borrar un elemento del carrito
+          */
+          function borrarItemCarrito(evento) {
+              // Obtenemos el producto ID que hay en el boton pulsado
+              const id = evento.target.dataset.item;
+              // Borramos todos los productos
+              carrito = carrito.filter((carritoId) => {
+                  return carritoId !== id;
+              });
+              // volvemos a renderizar
+              renderizarCarrito();
+          }
+
+          /**
+           * Calcula el precio total teniendo en cuenta los productos repetidos
+           */
+          function calcularTotal() {
+              // Recorremos el array del carrito 
+              return carrito.reduce((total, item) => {
+                  // De cada elemento obtenemos su precio
+                  const miItem = baseDeDatos.filter((itemBaseDatos) => {
+                      return itemBaseDatos.id === parseInt(item);
+                  });
+                  // Los sumamos al total
+                  return total + miItem[0].precio;
+              }, 0).toFixed(2);
+          }
+
+          /**
+          * Varia el carrito y vuelve a dibujarlo
+          */
+          function vaciarCarrito() {
+              // Limpiamos los productos guardados
+              carrito = [];
+              // Renderizamos los cambios
+              renderizarCarrito();
+          }
+
+          // Eventos
+          DOMbotonVaciar.addEventListener('click', vaciarCarrito);
+
+          // Inicio
+          renderizarProductos();
+          renderizarCarrito();
+        });
+    </script>
+    <style>
+        /*TITULO*/
+header{
+    display: flex;
+}
+.divIMG{
+    display: flex; align-self: center; width: 30%;
+}
+.divTIT{
+    display: flex; align-self:center; width: 70%;
+    padding-left: 7.5%;
+}
+
+
+.bg-2{
+    background: linear-gradient(to right, rgb(94, 221, 94), rgb(167, 247, 151));
+    display: flex;
+}
+.t-stroke-shadow {
+    color: #85e895;
+    text-shadow: -3px 3px #ffffff, 
+    -3px -3px #ffffff, 
+    3px -3px #ffffff, 
+    3px 3px #f3f3f2, 
+    6px 6px #6ac7c2;
+    font-size: 60px;
+}
+
+.logo{
+width:auto ;
+height:100px ;
+padding-left: 10%;
+}
+
+/*--------------------------------------------------------------------*/
+/*Navegador*/
+
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("fotos/Fondonav.jpg");
+    padding:5px 10px;
+    margin-top: 5px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    border:1px solid black;
+    border-radius: 7px;
+}
+
+.boton_nav{
+    border: 0.5px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 18px;
+    width: 100px;
+    background-color: #ffffff;
+    
+    
+}
+.boton_nav:hover{
+    background-color: #85e895;
+}
+
+.boton_nav_actual{
+    border: 0.5px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 18px;
+    width: 100px;
+    background-color: #85e895;
+}
+
+/*--------------------------------------------------------------------*/
+/*Pie de pagina*/
+footer{
+
+display: flex;
+justify-content: space-between;
+height: 60px;
+
+align-items: center;
+
+background: linear-gradient(to right, rgb(94, 221, 94), rgb(167, 247, 151));
+
+}
+
+.Fotop{
+height: 50px;
+width: 50px;
+margin-right: 10px;
+}
+.GardenShop{
+color: #ffffff;
+font-size: 10px; 
+text-align: left;
+margin-left: 10px;
+}
+
+.enlace{
+color: transparent;
+}
+/*--------------------------------------------------------------------*/
+    </style>
+</head>
+<body>
+    <header class="bg-2">
+        <div class="divIMG">
+            <img class="logo" src="fotos/GardenShopLogo1.PNG"> 
+        </div>
+        <div class="divTIT">
+        <h1 class="t-stroke-shadow">GARDENSHOP</h1>
+        </div>
+    </header>
+    <nav>
+        <a href= "inicio.html"target="blank"><button type="button" class="boton_nav">INICIO</button></a>
+        <a href= "catalogo2.html"target="blank"><button type="button" class="boton_nav_actual">CATALOGO</button></a>
+        <a href= "registro.html "target="blank"><button type="button" class="boton_nav">REGISTRO</button></a>
+        <a href= "contacto.html "target="blank"><button type="button" class="boton_nav">CONTACTO</button></a>
+            
+    </nav>
+    <div class="container">
+        <div class="row">
+            <!-- Elementos generados a partir del JSON -->
+            <main id="items" class="col-sm-8 row"></main>
+            <!-- Carrito -->
+            <aside class="col-sm-4">
+                <h2>Carrito</h2>
+                <!-- Elementos del carrito -->
+                <ul id="carrito" class="list-group"></ul>
+                <hr>
+                <!-- Precio total -->
+                <p class="text-right">Total: <span id="total"></span>&euro;</p>
+                <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+            </aside>
+        </div>
+    </div>
+    <footer>
+        <p class="GardenShop"> 
+          Tel: 972165107 <br>
+          Emile: GardenShop@gmail.com
+        </p>
+        
+        <div class="RedesSociales">
+            <a class ="enlace" href="https://www.youtube.com/">
+                <img alt="youtube" src="fotos/youtube.png" class="Fotop">
+            </a>
+            <a class ="enlace" href="https://www.instagram.com/?hl=es">
+                <img alt="instagram" src="fotos/instagram.png" class="Fotop">
+            </a>
+            <a class ="enlace" href="https://es-es.facebook.com/">
+                <img alt="facebook" src="fotos/facebook.png" class="Fotop">
+            </a>
+            <a class ="enlace" href="https://www.pinterest.es/">
+                <img alt="pinterest" src="fotos/pinteres.png" class="Fotop">
+            </a>
+
+              
+        </div>
+
+    </footer>
+</body>
+</html>
