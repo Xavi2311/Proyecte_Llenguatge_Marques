@@ -1,0 +1,81 @@
+/*
+ | -------------------------------------------------------------------------
+ | FONTS
+ | -------------------------------------------------------------------------
+*/
+@font-face
+{
+    font-family: 'Jardiland SemiBold';
+    src: url('../../fonts/jardiland-semibold-webfont.eot');
+    src: url('../../fonts/jardiland-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/jardiland-semibold-webfont.woff2') format('woff2'),
+         url('../../fonts/jardiland-semibold-webfont.woff') format('woff'),
+         url('../../fonts/jardiland-semibold-webfont.ttf') format('truetype'),
+         url('../../fonts/jardiland-semibold-webfont.svg#jardilandsemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Jardiland Bold';
+    src: url('../../fonts/jardiland-bold-webfont.eot');
+    src: url('../../fonts/jardiland-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/jardiland-bold-webfont.woff2') format('woff2'),
+         url('../../fonts/jardiland-bold-webfont.woff') format('woff'),
+         url('../../fonts/jardiland-bold-webfont.ttf') format('truetype'),
+         url('../../fonts/jardiland-bold-webfont.svg#jardiland_regularbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Jardiland Heavy';
+    src: url('../../fonts/jardiland-heavy-webfont.eot');
+    src: url('../../fonts/jardiland-heavy-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/jardiland-heavy-webfont.woff2') format('woff2'),
+         url('../../fonts/jardiland-heavy-webfont.woff') format('woff'),
+         url('../../fonts/jardiland-heavy-webfont.ttf') format('truetype'),
+         url('../../fonts/jardiland-heavy-webfont.svg#jardilandheavy') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Jardiland Light';
+    src: url('../../fonts/jardiland-light-webfont.eot');
+    src: url('../../fonts/jardiland-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/jardiland-light-webfont.woff2') format('woff2'),
+         url('../../fonts/jardiland-light-webfont.woff') format('woff'),
+         url('../../fonts/jardiland-light-webfont.ttf') format('truetype'),
+         url('../../fonts/jardiland-light-webfont.svg#jardilandlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Jardiland Regular';
+    src: url('../../fonts/jardiland-regular-webfont.eot');
+    src: url('../../fonts/jardiland-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/jardiland-regular-webfont.woff2') format('woff2'),
+         url('../../fonts/jardiland-regular-webfont.woff') format('woff'),
+         url('../../fonts/jardiland-regular-webfont.ttf') format('truetype'),
+         url('../../fonts/jardiland-regular-webfont.svg#jardiland_regularregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'Metafors Regular';
+    src: url('../../fonts/metafors-Regular.eot');
+    src: url('../../fonts/metafors-Regular.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/metafors-Regular.woff') format('woff'),
+         url('../../fonts/metafors-Regular.ttf') format('truetype'),
+         url('../../fonts/metafors-Regular.svg#my_font_isnt_funky_enoughRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
